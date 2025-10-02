@@ -238,10 +238,12 @@ body {
 }
 
 .difficulty-buttons {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
     justify-content: center;
-    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .difficulty-btn {
@@ -815,47 +817,714 @@ body {
     justify-content: center;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* Responsive Design - Optimized for All Devices */
+
+/* Desktop and Large Screens (1920x1080 and above) */
+@media (min-width: 1600px) {
+    .game-container {
+        max-width: 1200px;
+        padding: 40px;
+    }
+    
     .neon-title {
+        font-size: 4.5rem;
+    }
+    
+    .game-board {
+        max-width: 500px;
+        gap: 20px;
+        padding: 30px;
+    }
+    
+    .board-cell {
+        font-size: 4rem;
+    }
+    
+    .player-card {
+        min-height: 200px;
+        padding: 30px;
+    }
+    
+    .difficulty-grid {
+        grid-template-columns: repeat(6, 1fr);
+        max-width: 1000px;
+    }
+}
+
+/* Large Desktop (1200px - 1599px) */
+@media (min-width: 1200px) and (max-width: 1599px) {
+    .game-container {
+        max-width: 1000px;
+        padding: 30px;
+    }
+    
+    .neon-title {
+        font-size: 4rem;
+    }
+    
+    .game-board {
+        max-width: 450px;
+        gap: 18px;
+        padding: 25px;
+    }
+    
+    .board-cell {
+        font-size: 3.5rem;
+    }
+    
+    .difficulty-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 800px;
+    }
+}
+
+/* Standard Desktop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .game-container {
+        max-width: 900px;
+        padding: 25px;
+    }
+    
+    .neon-title {
+        font-size: 3.5rem;
+    }
+    
+    .difficulty-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 750px;
+    }
+    
+    .mode-buttons {
+        gap: 15px;
+    }
+    
+    .mode-btn {
+        min-width: 160px;
+    }
+}
+
+/* Tablet Landscape (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .game-container {
+        max-width: 700px;
+        padding: 20px;
+    }
+    
+    .neon-title {
+        font-size: 3rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .game-board {
+        max-width: 350px;
+        gap: 12px;
+        padding: 18px;
+    }
+    
+    .board-cell {
         font-size: 2.5rem;
     }
     
     .player-section {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
+        padding: 15px;
     }
     
     .vs-indicator {
-        margin: 0;
+        margin: 10px 0;
+        transform: rotate(90deg);
     }
     
-    .game-board {
-        max-width: 300px;
-        gap: 10px;
+    .player-card {
+        min-height: 120px;
+        padding: 15px;
     }
     
-    .board-cell {
+    .player-symbol {
         font-size: 2rem;
     }
     
-    .modal-content {
-        min-width: 300px;
-        margin: 20px;
+    .difficulty-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .difficulty-btn {
+        min-width: 140px;
     }
     
     .mode-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
     }
     
-    .difficulty-buttons {
-        flex-direction: column;
-        align-items: center;
+    .mode-btn {
+        min-width: 250px;
+    }
+    
+    .modal-content {
+        min-width: 350px;
+        margin: 20px;
+        padding: 30px;
+    }
+    
+    .scoreboard {
+        gap: 20px;
+        padding: 15px;
+    }
+    
+    .score-value {
+        font-size: 2rem;
     }
 }
 
-@keyframes pulse {
+/* Mobile Landscape (576px - 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .game-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+    
+    .neon-title {
+        font-size: 2.2rem;
+        margin-bottom: 8px;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .game-header {
+        margin-bottom: 20px;
+    }
+    
+    .game-mode-section, 
+    .difficulty-section {
+        margin: 20px 0;
+        padding: 15px;
+    }
+    
+    .mode-title,
+    .difficulty-title {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .mode-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .mode-btn {
+        min-width: 200px;
+        padding: 15px;
+    }
+    
+    .mode-icon {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+    
+    .mode-text {
+        font-size: 0.9rem;
+    }
+    
+    .difficulty-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .difficulty-btn {
+        padding: 12px 8px;
+        min-width: 110px;
+    }
+    
+    .diff-icon {
+        font-size: 1.3rem;
+    }
+    
+    .diff-text {
+        font-size: 0.75rem;
+    }
+    
+    .diff-desc {
+        font-size: 0.6rem;
+    }
+    
+    .diff-stars {
+        font-size: 0.6rem;
+    }
+    
+    .player-section {
+        flex-direction: column;
+        gap: 10px;
+        margin: 20px 0;
+        padding: 12px;
+    }
+    
+    .player-card {
+        min-height: 100px;
+        padding: 12px;
+    }
+    
+    .player-name {
+        font-size: 1rem;
+    }
+    
+    .player-symbol {
+        font-size: 1.8rem;
+    }
+    
+    .vs-indicator {
+        margin: 8px 0;
+        transform: rotate(90deg);
+    }
+    
+    .vs-text {
+        font-size: 1.5rem;
+    }
+    
+    .game-board {
+        max-width: 280px;
+        gap: 8px;
+        padding: 15px;
+        margin: 20px auto;
+    }
+    
+    .board-cell {
+        font-size: 2rem;
+        border-radius: 10px;
+    }
+    
+    .current-turn {
+        padding: 10px 20px;
+    }
+    
+    .turn-text {
+        font-size: 1rem;
+    }
+    
+    .neon-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        margin: 8px;
+    }
+    
+    .scoreboard {
+        gap: 15px;
+        padding: 12px;
+        margin: 20px 0;
+    }
+    
+    .score-value {
+        font-size: 1.8rem;
+    }
+    
+    .score-label {
+        font-size: 0.8rem;
+    }
+    
+    .modal-content {
+        min-width: 280px;
+        margin: 15px;
+        padding: 25px;
+    }
+    
+    .victory-title {
+        font-size: 1.8rem;
+    }
+    
+    .victory-message {
+        font-size: 1.1rem;
+    }
+    
+    .settings-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Mobile Portrait (9:16 aspect ratio and small screens) */
+@media (max-width: 575px) {
+    body {
+        font-size: 13px;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    .game-container {
+        padding: 10px;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    
+    .particles {
+        background-size: 100px 100px;
+    }
+    
+    .neon-title {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+    
+    .subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .game-header {
+        margin-bottom: 15px;
+    }
+    
+    .game-mode-section, 
+    .difficulty-section {
+        margin: 15px 0;
+        padding: 12px;
+        border-radius: 10px;
+    }
+    
+    .mode-title,
+    .difficulty-title {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .mode-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .mode-btn {
+        min-width: 180px;
+        padding: 12px;
+        border-radius: 10px;
+    }
+    
+    .mode-icon {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+    
+    .mode-text {
+        font-size: 0.8rem;
+    }
+    
+    .difficulty-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        max-width: 100%;
+    }
+    
+    .difficulty-btn {
+        padding: 10px 6px;
+        min-width: 95px;
+        border-radius: 10px;
+    }
+    
+    .diff-icon {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+    }
+    
+    .diff-text {
+        font-size: 0.65rem;
+        margin-bottom: 3px;
+    }
+    
+    .diff-desc {
+        font-size: 0.55rem;
+        margin-bottom: 3px;
+    }
+    
+    .diff-stars {
+        font-size: 0.55rem;
+    }
+    
+    .info-text {
+        font-size: 0.7rem;
+    }
+    
+    .player-section {
+        flex-direction: column;
+        gap: 8px;
+        margin: 15px 0;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    
+    .player-card {
+        min-height: 80px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    
+    .player-avatar {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+    
+    .player-name {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    .player-symbol {
+        font-size: 1.5rem;
+    }
+    
+    .ai-badge {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+    
+    .ai-level {
+        font-size: 0.8rem;
+    }
+    
+    .vs-indicator {
+        margin: 5px 0;
+        transform: rotate(90deg);
+    }
+    
+    .vs-text {
+        font-size: 1.2rem;
+    }
+    
+    .pulse-ring {
+        width: 40px;
+        height: 40px;
+        border-width: 2px;
+    }
+    
+    .game-status {
+        margin: 15px 0;
+    }
+    
+    .current-turn {
+        padding: 8px 16px;
+    }
+    
+    .turn-text {
+        font-size: 0.9rem;
+    }
+    
+    .game-board {
+        max-width: 240px;
+        gap: 6px;
+        padding: 12px;
+        margin: 15px auto;
+        border-radius: 15px;
+        border-width: 2px;
+    }
+    
+    .board-cell {
+        font-size: 1.6rem;
+        border-radius: 8px;
+        border-width: 2px;
+    }
+    
+    .game-controls {
+        margin: 15px 0;
+    }
+    
+    .neon-button {
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        margin: 6px;
+        border-radius: 15px;
+    }
+    
+    .scoreboard {
+        gap: 12px;
+        padding: 10px;
+        margin: 15px 0;
+        border-radius: 10px;
+    }
+    
+    .score-value {
+        font-size: 1.5rem;
+    }
+    
+    .score-label {
+        font-size: 0.7rem;
+        margin-bottom: 5px;
+    }
+    
+    .score-divider {
+        font-size: 1.5rem;
+    }
+    
+    .modal-content {
+        min-width: 250px;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 15px;
+        border-width: 2px;
+    }
+    
+    .victory-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .victory-message {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+    
+    .settings-title {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+    
+    .setting-item {
+        margin: 15px 0;
+    }
+    
+    .setting-item label {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+    
+    .neon-input {
+        padding: 10px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+    }
+    
+    .setting-buttons {
+        margin-top: 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Ultra Small Screens (320px and below) */
+@media (max-width: 320px) {
+    .neon-title {
+        font-size: 1.5rem;
+    }
+    
+    .game-board {
+        max-width: 200px;
+        gap: 4px;
+        padding: 8px;
+    }
+    
+    .board-cell {
+        font-size: 1.3rem;
+    }
+    
+    .difficulty-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .difficulty-btn {
+        min-width: 160px;
+    }
+    
+    .modal-content {
+        min-width: 220px;
+        margin: 8px;
+        padding: 15px;
+    }
+}
+
+/* Landscape Orientation for Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .game-container {
+        padding: 8px;
+        min-height: auto;
+    }
+    
+    .neon-title {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+    
+    .subtitle {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+    }
+    
+    .game-header {
+        margin-bottom: 10px;
+    }
+    
+    .game-mode-section,
+    .difficulty-section,
+    .player-section {
+        margin: 8px 0;
+        padding: 8px;
+    }
+    
+    .mode-title,
+    .difficulty-title {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+    
+    .difficulty-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    
+    .difficulty-btn {
+        padding: 6px 4px;
+        min-width: 80px;
+    }
+    
+    .diff-text {
+        font-size: 0.6rem;
+    }
+    
+    .diff-desc,
+    .diff-stars {
+        font-size: 0.5rem;
+    }
+    
+    .player-section {
+        flex-direction: row;
+        gap: 10px;
+    }
+    
+    .vs-indicator {
+        transform: none;
+        margin: 0 10px;
+    }
+    
+    .game-board {
+        max-width: 180px;
+        gap: 4px;
+        padding: 8px;
+        margin: 10px auto;
+    }
+    
+    .board-cell {
+        font-size: 1.2rem;
+    }
+    
+    .game-controls {
+        margin: 8px 0;
+    }
+    
+    .neon-button {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        margin: 4px;
+    }
+}@keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
 }
