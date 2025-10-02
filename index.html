@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 NEON TIC-TAC-TOE - Cyberpunk Edition 🌟</title>
+    <meta name="description" content="Play the ultimate cyberpunk Tic-Tac-Toe game with neon effects, AI opponents, and stunning visuals. Challenge the unbeatable AI or play with friends!">
+    <meta name="keywords" content="tic-tac-toe, cyberpunk, neon, AI game, web game, javascript game, futuristic">
+    <meta name="author" content="Mohmad Althaf Ali">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mohmadalthafali.github.io/neon_tic_tac_toe_game/">
+    <meta property="og:title" content="🌟 NEON TIC-TAC-TOE - Cyberpunk Edition">
+    <meta property="og:description" content="Experience the future of Tic-Tac-Toe with glowing neon effects, intelligent AI opponents, and cyberpunk aesthetics!">
+    <meta property="og:image" content="https://mohmadalthafali.github.io/neon_tic_tac_toe_game/preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mohmadalthafali.github.io/neon_tic_tac_toe_game/">
+    <meta property="twitter:title" content="🌟 NEON TIC-TAC-TOE - Cyberpunk Edition">
+    <meta property="twitter:description" content="Challenge the AI in this stunning cyberpunk Tic-Tac-Toe game with neon effects!">
+    <meta property="twitter:image" content="https://mohmadalthafali.github.io/neon_tic_tac_toe_game/preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>">
+    
+    <link rel="stylesheet" href="static/css/neon_style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Animated background particles -->
+        <div class="particles"></div>
+        
+        <!-- Main game header -->
+        <div class="game-header">
+            <h1 class="neon-title">
+                <span class="glitch" data-text="NEON TIC-TAC-TOE">NEON TIC-TAC-TOE</span>
+            </h1>
+            <div class="subtitle">🚀 CYBERPUNK EDITION 🚀</div>
+        </div>
+
+        <!-- Game Mode Selection -->
+        <div class="game-mode-section">
+            <div class="mode-title">🎮 SELECT GAME MODE 🎮</div>
+            <div class="mode-buttons">
+                <button class="mode-btn active" id="pvpMode">
+                    <span class="mode-icon">👥</span>
+                    <span class="mode-text">PLAYER VS PLAYER</span>
+                </button>
+                <button class="mode-btn" id="pvcMode">
+                    <span class="mode-icon">🤖</span>
+                    <span class="mode-text">PLAYER VS COMPUTER</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Difficulty Selection (hidden by default) -->
+        <div class="difficulty-section" id="difficultySection" style="display: none;">
+            <div class="difficulty-title">🎯 CHOOSE DIFFICULTY 🎯</div>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn easy" data-level="easy">
+                    <span class="diff-icon">😊</span>
+                    <span class="diff-text">EASY</span>
+                    <span class="diff-desc">Random moves</span>
+                </button>
+                <button class="difficulty-btn medium active" data-level="medium">
+                    <span class="diff-icon">🧠</span>
+                    <span class="diff-text">MEDIUM</span>
+                    <span class="diff-desc">Smart blocks</span>
+                </button>
+                <button class="difficulty-btn hard" data-level="hard">
+                    <span class="diff-icon">🔥</span>
+                    <span class="diff-text">HARD</span>
+                    <span class="diff-desc">Unbeatable AI</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Player info section -->
+        <div class="player-section">
+            <div class="player-card player-x">
+                <div class="player-avatar">🔥</div>
+                <div class="player-name" id="playerXName">PLAYER X</div>
+                <div class="player-symbol neon-pink">X</div>
+            </div>
+            
+            <div class="vs-indicator">
+                <div class="vs-text">VS</div>
+                <div class="pulse-ring"></div>
+            </div>
+            
+            <div class="player-card player-o">
+                <div class="player-avatar" id="playerOAvatar">⚡</div>
+                <div class="player-name" id="playerOName">PLAYER O</div>
+                <div class="player-symbol neon-cyan">O</div>
+                <div class="ai-indicator" id="aiIndicator" style="display: none;">
+                    <div class="ai-badge">🤖 AI</div>
+                    <div class="ai-level" id="aiLevel">MEDIUM</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game status -->
+        <div class="game-status">
+            <div class="current-turn" id="currentTurn">
+                <span class="turn-text">🔥 PLAYER X'S TURN 🔥</span>
+            </div>
+        </div>
+
+        <!-- Game board -->
+        <div class="game-board" id="gameBoard">
+            <div class="board-cell" data-index="0"></div>
+            <div class="board-cell" data-index="1"></div>
+            <div class="board-cell" data-index="2"></div>
+            <div class="board-cell" data-index="3"></div>
+            <div class="board-cell" data-index="4"></div>
+            <div class="board-cell" data-index="5"></div>
+            <div class="board-cell" data-index="6"></div>
+            <div class="board-cell" data-index="7"></div>
+            <div class="board-cell" data-index="8"></div>
+        </div>
+
+        <!-- Game controls -->
+        <div class="game-controls">
+            <button class="neon-button reset-btn" id="resetBtn">
+                <span class="button-text">⚡ RESET GAME ⚡</span>
+                <div class="button-glow"></div>
+            </button>
+            
+            <button class="neon-button settings-btn" id="settingsBtn">
+                <span class="button-text">⚙️ SETTINGS ⚙️</span>
+                <div class="button-glow"></div>
+            </button>
+        </div>
+
+        <!-- Score board -->
+        <div class="scoreboard">
+            <div class="score-item">
+                <div class="score-label">PLAYER X WINS</div>
+                <div class="score-value neon-pink" id="scoreX">0</div>
+            </div>
+            <div class="score-divider">|</div>
+            <div class="score-item">
+                <div class="score-label">PLAYER O WINS</div>
+                <div class="score-value neon-cyan" id="scoreO">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory modal -->
+    <div class="modal" id="victoryModal">
+        <div class="modal-content">
+            <div class="victory-animation">
+                <div class="firework"></div>
+                <div class="firework"></div>
+                <div class="firework"></div>
+            </div>
+            <h2 class="victory-title" id="victoryTitle">🏆 VICTORY! 🏆</h2>
+            <p class="victory-message" id="victoryMessage">Player X Wins!</p>
+            <button class="neon-button" id="playAgainBtn">
+                <span class="button-text">🎮 PLAY AGAIN 🎮</span>
+                <div class="button-glow"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h2 class="settings-title">⚙️ GAME SETTINGS ⚙️</h2>
+            <div class="setting-item">
+                <label for="playerXInput">Player X Name:</label>
+                <input type="text" id="playerXInput" class="neon-input" placeholder="Enter Player X name">
+            </div>
+            <div class="setting-item" id="playerOSetting">
+                <label for="playerOInput">Player O Name:</label>
+                <input type="text" id="playerOInput" class="neon-input" placeholder="Enter Player O name">
+            </div>
+            <div class="setting-item">
+                <label>
+                    <input type="checkbox" id="soundToggle" checked> Enable Sound Effects
+                </label>
+            </div>
+            <div class="setting-item">
+                <label>
+                    <input type="checkbox" id="animationsToggle" checked> Enable Animations
+                </label>
+            </div>
+            <div class="setting-buttons">
+                <button class="neon-button" id="saveSettingsBtn">
+                    <span class="button-text">💾 SAVE</span>
+                    <div class="button-glow"></div>
+                </button>
+                <button class="neon-button" id="closeSettingsBtn">
+                    <span class="button-text">❌ CLOSE</span>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/neon_script.js"></script>
+</body>
+</html>

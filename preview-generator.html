@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Neon Tic-Tac-Toe Preview Generator</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #0a0a0a, #1a0033, #0a0a0a);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .preview-container {
+            width: 1200px;
+            height: 630px;
+            background: radial-gradient(circle at center, #1a1a1a, #0a0a0a);
+            border: 3px solid #00ff41;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .neon-title {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #00ff41;
+            text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            color: #ff0080;
+            text-shadow: 0 0 15px #ff0080;
+            margin-bottom: 40px;
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .cell {
+            width: 80px;
+            height: 80px;
+            background: #1a1a1a;
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .x { color: #ff0080; text-shadow: 0 0 15px #ff0080; }
+        .o { color: #00ffff; text-shadow: 0 0 15px #00ffff; }
+        .features {
+            display: flex;
+            gap: 40px;
+            font-size: 1.1rem;
+        }
+        .feature {
+            text-align: center;
+            color: #cccccc;
+        }
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(2px 2px at 100px 150px, #00ff41, transparent),
+                radial-gradient(2px 2px at 200px 300px, #ff0080, transparent),
+                radial-gradient(1px 1px at 500px 200px, #00ffff, transparent),
+                radial-gradient(1px 1px at 800px 400px, #ff1744, transparent);
+            background-repeat: repeat;
+            background-size: 300px 300px;
+            animation: float 20s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-300px, -300px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="particles"></div>
+        <div class="neon-title">🌟 NEON TIC-TAC-TOE 🌟</div>
+        <div class="subtitle">CYBERPUNK EDITION</div>
+        <div class="game-grid">
+            <div class="cell x">X</div>
+            <div class="cell o">O</div>
+            <div class="cell"></div>
+            <div class="cell o">O</div>
+            <div class="cell x">X</div>
+            <div class="cell x">X</div>
+            <div class="cell"></div>
+            <div class="cell o">O</div>
+            <div class="cell"></div>
+        </div>
+        <div class="features">
+            <div class="feature">🤖 AI Opponents</div>
+            <div class="feature">✨ Neon Effects</div>
+            <div class="feature">🎮 Web Browser</div>
+            <div class="feature">📱 Mobile Ready</div>
+        </div>
+    </div>
+    
+    <script>
+        // Take screenshot instructions
+        console.log("📸 To create preview image:");
+        console.log("1. Open this file in browser");
+        console.log("2. Take screenshot (1200x630 pixels)");
+        console.log("3. Save as 'preview.png'");
+        console.log("4. Upload to your repository");
+    </script>
+</body>
+</html>
