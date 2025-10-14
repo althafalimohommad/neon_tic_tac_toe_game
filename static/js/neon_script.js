@@ -3,19 +3,22 @@ class NeonTicTacToe {
     constructor() {
         this.board = Array(9).fill('');
         this.currentPlayer = 'X';
-        this.gameActive = true;
+        this.gameActive = false; // Start false until game setup complete
         this.playerXName = 'PLAYER X';
         this.playerOName = 'PLAYER O';
         this.scores = { X: 0, O: 0 };
         this.gameMode = 'pvp'; // 'pvp' or 'pvc'
-        this.difficulty = 'medium'; // 'easy', 'medium', 'hard'
+        this.difficulty = 'medium'; // 'beginner', 'easy', 'medium', 'hard', 'expert', 'nightmare'
         this.isComputerTurn = false;
         this.soundEnabled = true;
         this.animationsEnabled = true;
+        this.particlesEnabled = true;
+        this.gameStarted = false;
         
         this.initializeGame();
         this.bindEvents();
         this.createParticleEffect();
+        this.showSetupModal();
     }
 
     initializeGame() {
@@ -25,8 +28,20 @@ class NeonTicTacToe {
         this.settingsBtn = document.getElementById('settingsBtn');
         this.victoryModal = document.getElementById('victoryModal');
         this.settingsModal = document.getElementById('settingsModal');
+        this.playersModal = document.getElementById('playersModal');
+        this.gameSetupModal = document.getElementById('gameSetupModal');
         
         this.updateDisplay();
+    }
+    
+    showSetupModal() {
+        this.gameSetupModal.style.display = 'block';
+    }
+    
+    hideSetupModal() {
+        this.gameSetupModal.style.display = 'none';
+        this.gameStarted = true;
+        this.gameActive = true;
     }
 
     bindEvents() {
@@ -38,17 +53,58 @@ class NeonTicTacToe {
             }
         });
 
-        // Game mode selection
-        document.getElementById('pvpMode').addEventListener('click', () => {
-            this.setGameMode('pvp');
+        // Menu bar buttons
+        document.getElementById('menuNewGame').addEventListener('click', () => {
+            this.showSetupModal();
         });
 
-        document.getElementById('pvcMode').addEventListener('click', () => {
-            this.setGameMode('pvc');
+        document.getElementById('menuPlayers').addEventListener('click', () => {
+            this.openPlayersModal();
         });
 
-        // Difficulty selection
-        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+        document.getElementById('menuSettings').addEventListener('click', () => {
+            this.openSettings();
+        });
+
+        // Game Setup Modal - Mode selection
+        document.getElementById('setupPvpMode').addEventListener('click', () => {
+            this.selectSetupMode('pvp');
+        });
+
+        document.getElementById('setupPvcMode').addEventListener('click', () => {
+            this.selectSetupMode('pvc');
+        });
+
+        // Game Setup Modal - Difficulty selection
+        document.querySelectorAll('#difficultySetup .difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.selectSetupDifficulty(btn.dataset.level);
+            });
+        });
+
+        // Game Setup Modal - Start game button
+        document.getElementById('startGameBtn').addEventListener('click', () => {
+            this.startGameFromSetup();
+        });
+
+        // Game mode selection (on game screen)
+        const pvpMode = document.getElementById('pvpMode');
+        const pvcMode = document.getElementById('pvcMode');
+        
+        if (pvpMode) {
+            pvpMode.addEventListener('click', () => {
+                this.setGameMode('pvp');
+            });
+        }
+        
+        if (pvcMode) {
+            pvcMode.addEventListener('click', () => {
+                this.setGameMode('pvc');
+            });
+        }
+
+        // Difficulty selection (on game screen)
+        document.querySelectorAll('#difficultySection .difficulty-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.setDifficulty(btn.dataset.level);
             });
@@ -71,6 +127,16 @@ class NeonTicTacToe {
             this.resetGame();
         });
 
+        // Players modal buttons
+        document.getElementById('savePlayersBtn').addEventListener('click', () => {
+            this.savePlayers();
+        });
+
+        document.getElementById('closePlayersBtn').addEventListener('click', () => {
+            this.closePlayersModal();
+        });
+
+        // Settings modal buttons
         document.getElementById('saveSettingsBtn').addEventListener('click', () => {
             this.saveSettings();
         });
@@ -81,16 +147,17 @@ class NeonTicTacToe {
 
         // Close modals on background click
         document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
+            if (e.target.classList.contains('modal') && !e.target.classList.contains('game-setup-modal')) {
                 this.closeModal();
                 this.closeSettings();
+                this.closePlayersModal();
             }
         });
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'r' || e.key === 'R') {
-                this.resetGame();
+                if (this.gameStarted) this.resetGame();
             }
             if (e.key === 's' || e.key === 'S') {
                 this.openSettings();
@@ -98,8 +165,105 @@ class NeonTicTacToe {
             if (e.key === 'Escape') {
                 this.closeModal();
                 this.closeSettings();
+                this.closePlayersModal();
             }
         });
+    }
+
+    // Game Setup Modal Methods
+    selectSetupMode(mode) {
+        this.gameMode = mode;
+        
+        // Update UI
+        document.querySelectorAll('.setup-content .mode-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(mode === 'pvp' ? 'setupPvpMode' : 'setupPvcMode').classList.add('active');
+        
+        // Show/hide difficulty selection
+        const difficultySetup = document.getElementById('difficultySetup');
+        const setupPlayerOIcon = document.getElementById('setupPlayerOIcon');
+        const setupPlayerOLabel = document.getElementById('setupPlayerOLabel');
+        
+        if (mode === 'pvc') {
+            difficultySetup.style.display = 'block';
+            setupPlayerOIcon.textContent = '🤖';
+            setupPlayerOLabel.textContent = 'AI Name (Optional)';
+        } else {
+            difficultySetup.style.display = 'none';
+            setupPlayerOIcon.textContent = '⚡';
+            setupPlayerOLabel.textContent = 'Player O';
+        }
+    }
+
+    selectSetupDifficulty(level) {
+        this.difficulty = level;
+        
+        // Update UI
+        document.querySelectorAll('#difficultySetup .difficulty-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`#difficultySetup [data-level="${level}"]`).classList.add('active');
+    }
+
+    startGameFromSetup() {
+        // Get player names
+        const playerXInput = document.getElementById('setupPlayerX').value.trim();
+        const playerOInput = document.getElementById('setupPlayerO').value.trim();
+        
+        this.playerXName = playerXInput || 'PLAYER X';
+        
+        if (this.gameMode === 'pvc') {
+            this.playerOName = playerOInput || 'AI COMPUTER';
+        } else {
+            this.playerOName = playerOInput || 'PLAYER O';
+        }
+        
+        // Hide setup modal and show game
+        this.hideSetupModal();
+        this.updatePlayerDisplay();
+        this.resetGame();
+        
+        if (this.soundEnabled) this.playSound('settings');
+    }
+
+    // Players Modal Methods
+    openPlayersModal() {
+        // Pre-fill current names
+        document.getElementById('playerXInput').value = this.playerXName;
+        document.getElementById('playerOInput').value = this.gameMode === 'pvc' ? '' : this.playerOName;
+        
+        // Update label based on game mode
+        const playerOInputIcon = document.getElementById('playerOInputIcon');
+        const playerOInputLabel = document.getElementById('playerOInputLabel');
+        
+        if (this.gameMode === 'pvc') {
+            playerOInputIcon.textContent = '🤖';
+            playerOInputLabel.textContent = 'AI Name:';
+        } else {
+            playerOInputIcon.textContent = '⚡';
+            playerOInputLabel.textContent = 'Player O Name:';
+        }
+        
+        this.playersModal.style.display = 'block';
+    }
+
+    closePlayersModal() {
+        this.playersModal.style.display = 'none';
+    }
+
+    savePlayers() {
+        const playerXInput = document.getElementById('playerXInput').value.trim();
+        const playerOInput = document.getElementById('playerOInput').value.trim();
+        
+        this.playerXName = playerXInput || 'PLAYER X';
+        
+        if (this.gameMode === 'pvc') {
+            this.playerOName = playerOInput || 'AI COMPUTER';
+        } else {
+            this.playerOName = playerOInput || 'PLAYER O';
+        }
+        
+        this.updatePlayerDisplay();
+        this.closePlayersModal();
+        
+        if (this.soundEnabled) this.playSound('settings');
     }
 
     makeMove(index, isComputerMove = false) {
@@ -492,21 +656,15 @@ class NeonTicTacToe {
     }
 
     saveSettings() {
-        const newPlayerXName = document.getElementById('playerXInput').value.trim() || 'PLAYER X';
-        let newPlayerOName = document.getElementById('playerOInput').value.trim() || 'PLAYER O';
-        
-        this.playerXName = newPlayerXName.toUpperCase();
-        
-        // Only update Player O name if not in computer mode
-        if (this.gameMode === 'pvp') {
-            this.playerOName = newPlayerOName.toUpperCase();
-        }
-        
         // Update sound and animation settings
         this.soundEnabled = document.getElementById('soundToggle').checked;
         this.animationsEnabled = document.getElementById('animationsToggle').checked;
         
-        this.updateDisplay();
+        const particlesToggle = document.getElementById('particlesToggle');
+        if (particlesToggle) {
+            this.particlesEnabled = particlesToggle.checked;
+        }
+        
         this.closeSettings();
         if (this.soundEnabled) this.playSound('settings');
     }

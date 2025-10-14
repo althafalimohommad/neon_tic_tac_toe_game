@@ -28,6 +28,30 @@
     <link rel="stylesheet" href="static/css/neon_style.css">
 </head>
 <body>
+    <!-- Menu Bar -->
+    <nav class="menu-bar">
+        <div class="menu-container">
+            <div class="menu-logo">
+                <span class="logo-icon">🌟</span>
+                <span class="logo-text">NEON TIC-TAC-TOE</span>
+            </div>
+            <div class="menu-items">
+                <button class="menu-btn" id="menuNewGame">
+                    <span class="menu-icon">🎮</span>
+                    <span class="menu-text">New Game</span>
+                </button>
+                <button class="menu-btn" id="menuPlayers">
+                    <span class="menu-icon">👥</span>
+                    <span class="menu-text">Players</span>
+                </button>
+                <button class="menu-btn" id="menuSettings">
+                    <span class="menu-icon">⚙️</span>
+                    <span class="menu-text">Settings</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
     <div class="game-container">
         <!-- Animated background particles -->
         <div class="particles"></div>
@@ -40,39 +64,127 @@
             <div class="subtitle">🚀 CYBERPUNK EDITION 🚀</div>
         </div>
 
-        <!-- Game Mode Selection -->
-        <div class="game-mode-section">
-            <div class="mode-title">🎮 SELECT GAME MODE 🎮</div>
+        <!-- Game Setup Modal (Initial Screen) -->
+        <div class="modal game-setup-modal" id="gameSetupModal">
+            <div class="modal-content setup-content">
+                <h2 class="setup-title">🎮 GAME SETUP 🎮</h2>
+                
+                <!-- Game Mode Selection -->
+                <div class="setup-section">
+                    <div class="setup-label">SELECT GAME MODE</div>
+                    <div class="mode-buttons">
+                        <button class="mode-btn active" id="setupPvpMode" data-mode="pvp">
+                            <span class="mode-icon">👥</span>
+                            <span class="mode-text">MULTIPLAYER</span>
+                            <span class="mode-desc">Play with a friend</span>
+                        </button>
+                        <button class="mode-btn" id="setupPvcMode" data-mode="pvc">
+                            <span class="mode-icon">🤖</span>
+                            <span class="mode-text">VS COMPUTER</span>
+                            <span class="mode-desc">Challenge the AI</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Difficulty Selection (for AI mode) -->
+                <div class="setup-section difficulty-setup" id="difficultySetup" style="display: none;">
+                    <div class="setup-label">AI DIFFICULTY</div>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn beginner" data-level="beginner">
+                            <span class="diff-icon">🌱</span>
+                            <span class="diff-text">BEGINNER</span>
+                            <span class="diff-stars">⭐</span>
+                        </button>
+                        <button class="difficulty-btn easy" data-level="easy">
+                            <span class="diff-icon">😊</span>
+                            <span class="diff-text">EASY</span>
+                            <span class="diff-stars">⭐⭐</span>
+                        </button>
+                        <button class="difficulty-btn medium active" data-level="medium">
+                            <span class="diff-icon">🧠</span>
+                            <span class="diff-text">MEDIUM</span>
+                            <span class="diff-stars">⭐⭐⭐</span>
+                        </button>
+                        <button class="difficulty-btn hard" data-level="hard">
+                            <span class="diff-icon">🔥</span>
+                            <span class="diff-text">HARD</span>
+                            <span class="diff-stars">⭐⭐⭐⭐</span>
+                        </button>
+                        <button class="difficulty-btn expert" data-level="expert">
+                            <span class="diff-icon">💀</span>
+                            <span class="diff-text">EXPERT</span>
+                            <span class="diff-stars">⭐⭐⭐⭐⭐</span>
+                        </button>
+                        <button class="difficulty-btn nightmare" data-level="nightmare">
+                            <span class="diff-icon">👹</span>
+                            <span class="diff-text">NIGHTMARE</span>
+                            <span class="diff-stars">⭐⭐⭐⭐⭐⭐</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Player Names -->
+                <div class="setup-section">
+                    <div class="setup-label">PLAYER NAMES</div>
+                    <div class="player-inputs">
+                        <div class="input-group">
+                            <label for="setupPlayerX">
+                                <span class="input-icon">🔥</span>
+                                <span class="input-label">Player X</span>
+                            </label>
+                            <input type="text" id="setupPlayerX" class="neon-input" placeholder="Enter Player X name" maxlength="15">
+                        </div>
+                        <div class="input-group" id="setupPlayerOGroup">
+                            <label for="setupPlayerO">
+                                <span class="input-icon" id="setupPlayerOIcon">⚡</span>
+                                <span class="input-label" id="setupPlayerOLabel">Player O</span>
+                            </label>
+                            <input type="text" id="setupPlayerO" class="neon-input" placeholder="Enter Player O name" maxlength="15">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Start Game Button -->
+                <button class="neon-button start-game-btn" id="startGameBtn">
+                    <span class="button-text">🚀 START GAME 🚀</span>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Mode Selection (Compact version for game screen) -->
+        <div class="game-mode-section" id="gameModeSection" style="display: none;">
+            <div class="mode-title">🎮 GAME MODE 🎮</div>
             <div class="mode-buttons">
                 <button class="mode-btn active" id="pvpMode">
                     <span class="mode-icon">👥</span>
-                    <span class="mode-text">PLAYER VS PLAYER</span>
+                    <span class="mode-text">MULTIPLAYER</span>
                 </button>
                 <button class="mode-btn" id="pvcMode">
                     <span class="mode-icon">🤖</span>
-                    <span class="mode-text">PLAYER VS COMPUTER</span>
+                    <span class="mode-text">VS COMPUTER</span>
                 </button>
             </div>
         </div>
 
         <!-- Difficulty Selection (hidden by default) -->
         <div class="difficulty-section" id="difficultySection" style="display: none;">
-            <div class="difficulty-title">🎯 CHOOSE DIFFICULTY 🎯</div>
+            <div class="difficulty-title">🎯 AI DIFFICULTY 🎯</div>
             <div class="difficulty-buttons">
                 <button class="difficulty-btn easy" data-level="easy">
                     <span class="diff-icon">😊</span>
                     <span class="diff-text">EASY</span>
-                    <span class="diff-desc">Random moves</span>
+                    <span class="diff-stars">⭐⭐</span>
                 </button>
                 <button class="difficulty-btn medium active" data-level="medium">
                     <span class="diff-icon">🧠</span>
                     <span class="diff-text">MEDIUM</span>
-                    <span class="diff-desc">Smart blocks</span>
+                    <span class="diff-stars">⭐⭐⭐</span>
                 </button>
                 <button class="difficulty-btn hard" data-level="hard">
                     <span class="diff-icon">🔥</span>
                     <span class="diff-text">HARD</span>
-                    <span class="diff-desc">Unbeatable AI</span>
+                    <span class="diff-stars">⭐⭐⭐⭐</span>
                 </button>
             </div>
         </div>
@@ -165,26 +277,56 @@
         </div>
     </div>
 
+    <!-- Players Modal -->
+    <div class="modal" id="playersModal">
+        <div class="modal-content">
+            <h2 class="settings-title">👥 MANAGE PLAYERS 👥</h2>
+            <div class="setting-item">
+                <label for="playerXInput">
+                    <span class="input-icon">🔥</span> Player X Name:
+                </label>
+                <input type="text" id="playerXInput" class="neon-input" placeholder="Enter Player X name" maxlength="15">
+            </div>
+            <div class="setting-item" id="playerOSetting">
+                <label for="playerOInput">
+                    <span class="input-icon" id="playerOInputIcon">⚡</span> 
+                    <span id="playerOInputLabel">Player O Name:</span>
+                </label>
+                <input type="text" id="playerOInput" class="neon-input" placeholder="Enter Player O name" maxlength="15">
+            </div>
+            <div class="setting-buttons">
+                <button class="neon-button" id="savePlayersBtn">
+                    <span class="button-text">💾 SAVE NAMES</span>
+                    <div class="button-glow"></div>
+                </button>
+                <button class="neon-button" id="closePlayersBtn">
+                    <span class="button-text">❌ CLOSE</span>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Settings modal -->
     <div class="modal" id="settingsModal">
         <div class="modal-content">
             <h2 class="settings-title">⚙️ GAME SETTINGS ⚙️</h2>
             <div class="setting-item">
-                <label for="playerXInput">Player X Name:</label>
-                <input type="text" id="playerXInput" class="neon-input" placeholder="Enter Player X name">
-            </div>
-            <div class="setting-item" id="playerOSetting">
-                <label for="playerOInput">Player O Name:</label>
-                <input type="text" id="playerOInput" class="neon-input" placeholder="Enter Player O name">
-            </div>
-            <div class="setting-item">
                 <label>
-                    <input type="checkbox" id="soundToggle" checked> Enable Sound Effects
+                    <input type="checkbox" id="soundToggle" checked> 
+                    <span class="checkbox-label">🔊 Enable Sound Effects</span>
                 </label>
             </div>
             <div class="setting-item">
                 <label>
-                    <input type="checkbox" id="animationsToggle" checked> Enable Animations
+                    <input type="checkbox" id="animationsToggle" checked> 
+                    <span class="checkbox-label">✨ Enable Animations</span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <label>
+                    <input type="checkbox" id="particlesToggle" checked> 
+                    <span class="checkbox-label">🌟 Enable Particle Effects</span>
                 </label>
             </div>
             <div class="setting-buttons">
